@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section>
+    <div class="row">
+        <div class="col-12">
+            {{ book.book_title }}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <img src="{{ book.book_image }}">
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <div class="col-12">
+                    <p>author: </p>
+                    {{ book.book_author }}
+                </div>
+               <hr>
+                <div class="col-12">
+                    <p>Category: </p>
+                    {{ book.category_name }}
+                </div>
+                <div class="col-12">
+                    <p>Saga: </p>
+                    {{ book.collection_name }}
+                </div>
+                <div class="col-12">
+                    <p>Rating: </p>
+                    {{ book.book_rating }}
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            {{ book.book_description }}
+        </div>
+    </div>
+</section>
+
+{% endblock %}

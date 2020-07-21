@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section>
+    <div class="row">
+
+        {% for book in books %}
+
+        <div class="col-md-3 col-12">
+            <a href="{{ url_for('get_book', book_id=book._id) }}">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ book.book_image }}" class="card-img-top" alt="{{ book.book_title }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ book.book_title }}</h5>
+                        <p class="card-text">{{ book.book_description }}</p>
+                        <p class="rating"> {{ book.book_rating }}</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}
+    
+
+   
+        
+    
