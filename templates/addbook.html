@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section>
+    <div class="container"> 
+        <form action="{{ url_for('insert_book') }}" method="POST">
+            <div class="form-row">
+                <div class="form-group col-12">
+                    <label for="title">Book Title</label>
+                    <input type="text" class="form-control" id="title" name="book_title" aria-describedby="emailHelp">
+                </div>
+                <div class="form-group col-12">
+                    <label for="category">Category - If the category is not leasted click <a>here!</a></label>
+                    <select class="form-control" id="category" name="category_name">
+                        <option value="" disabled selected>Choose Category</option>
+
+                        {% for category in categories %}
+
+                         <option value="{{ category.category_name }}">{{ category.category_name }}</option>
+
+                        {% endfor %}
+
+                    </select>
+                </div>
+                <div class="form-group col-6">
+                    <label for="author">Book Author</label>
+                    <input type="text" class="form-control" id="author" name="book_author" aria-describedby="emailHelp">
+                </div>
+                <div class="form-group col-6">
+                    <label for="image">Book Image</label>
+                    <input type="text" class="form-control" id="image" name="book_image" aria-describedby="emailHelp">
+                </div>
+                <div class="form-group col-6">
+                    <label for="saga">Saga</label>
+                    <input type="text" class="form-control" id="saga" name="collection_name" aria-describedby="emailHelp"
+                    placeholder="If not part of a saga please write N/A">
+                </div>
+                <div class="form-group col-6">
+                    <label for="rating">Select Rating</label>
+                    <select class="form-control" id="rating" name="book_rating">
+                        <option>1.0</option>
+                        <option>2.0</option>
+                        <option>3.0</option>
+                        <option>4.0</option>
+                        <option>5.0</option>
+                    </select>
+                </div>
+                <div class="form-group col-12">
+                    <label for="description">Book Desctiption </label>
+                    <textarea class="form-control" id="description" name="book_description" rows="5"></textarea>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="col-12">
+                    <button class="btn btn-primary">Submit</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+{% endblock %}
