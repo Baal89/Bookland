@@ -1,6 +1,5 @@
 import os
 import env
-import bson
 from flask import Flask, render_template, redirect, request, url_for
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
@@ -38,6 +37,28 @@ def add_book():
 def insert_book():
     books = mongo.db.books
     books.insert_one(request.form.to_dict())
+    return redirect(url_for('index'))
+
+
+@app.route('/edit_book/<book_id>')
+def edit_book(book_id):
+    a_book = mongo.db.books.find_one({'_id': ObjectId(book_id)})
+    category = mongo.db.categories.find()
+    return render_template('editbook.html', book=a_book, categories=category)
+
+
+@app.route('/update_book/<book_id>', methods=['POST'])
+def update_book(book_id):
+    books = mongo.db.books
+    books.update({'_id': ObjectId(book_id)}, {
+        'book_title': request.form.get('book_title'),
+        'category_name': request.form.get('category_name'),
+        'book_author': request.form.get('book_author'),
+        'book_image': request.form.get('book_image'),
+        'collection_name': request.form.get('collection_name'),
+        'book_rating': request.form.get('book_rating'),
+        'book_description': request.form.get('book_description')
+    })
     return redirect(url_for('index'))
 
 
