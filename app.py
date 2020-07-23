@@ -35,8 +35,21 @@ def add_book():
 
 @app.route('/insert_book', methods=['POST'])
 def insert_book():
+
+    rating = float(request.form.get('book_rating'))
+
+    submission = {
+        'book_title': request.form.get('book_title'),
+        'category_name': request.form.get('category_name'),
+        'book_author': request.form.get('book_author'),
+        'book_image': request.form.get('book_image'),
+        'collection_name': request.form.get('collection_name'),
+        'book_rating': rating,
+        'book_description': request.form.get('book_description')
+    }
+
     books = mongo.db.books
-    books.insert_one(request.form.to_dict())
+    books.insert_one(submission)
     return redirect(url_for('index'))
 
 
