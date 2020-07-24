@@ -22,8 +22,9 @@ def index():
 
 @app.route('/get_book/<book_id>')
 def get_book(book_id):
+    reviews = mongo.db.reviews.find({'id': ObjectId(book_id)})
     a_book = mongo.db.books.find_one({'_id': ObjectId(book_id)})
-    return render_template('getbook.html', book=a_book)
+    return render_template('getbook.html', book=a_book, reviews=reviews)
 
 
 @app.route('/add_book')
@@ -35,21 +36,8 @@ def add_book():
 
 @app.route('/insert_book', methods=['POST'])
 def insert_book():
-
-    rating = float(request.form.get('book_rating'))
-
-    submission = {
-        'book_title': request.form.get('book_title'),
-        'category_name': request.form.get('category_name'),
-        'book_author': request.form.get('book_author'),
-        'book_image': request.form.get('book_image'),
-        'collection_name': request.form.get('collection_name'),
-        'book_rating': rating,
-        'book_description': request.form.get('book_description')
-    }
-
     books = mongo.db.books
-    books.insert_one(submission)
+    books.insert_one(request.form.to_dict())
     return redirect(url_for('index'))
 
 
@@ -69,7 +57,6 @@ def update_book(book_id):
         'book_author': request.form.get('book_author'),
         'book_image': request.form.get('book_image'),
         'collection_name': request.form.get('collection_name'),
-        'book_rating': request.form.get('book_rating'),
         'book_description': request.form.get('book_description')
     })
     return redirect(url_for('index'))
@@ -79,6 +66,29 @@ def update_book(book_id):
 def delete_book(book_id):
     mongo.db.books.remove({'_id': ObjectId(book_id)})
     return redirect(url_for('index'))
+
+
+@app.route('/add_review/<book_id>')
+def add_review(book_id):
+    a_book = mongo.db.books.find_one({'_id': ObjectId(book_id)})
+    return render_template('addreview.html', book=a_book)
+
+
+@app.route('/insert_review/<book_id>', methods=['POST'])
+def insert_review(book_id):
+    original_id = ObjectId(book_id)
+
+    submission = {
+        'id': original_id,
+        'book_title': request.form.get('book_title'),
+        'review_title': request.form.get('review_title'),
+        'review_rating': request.form.get('review_rating'),
+        'review_description': request.form.get('review_description')
+    }
+
+    reviews = mongo.db.reviews
+    reviews.insert_one(submission)
+    return redirect(url_for('get_book', book_id=book_id))
 
 
 if __name__ == '__main__':
