@@ -1,9 +1,12 @@
 import os
-import env
-from flask import Flask, render_template, redirect, request, url_for
+from flask import (
+    Flask, render_template, 
+    flash, session, redirect, request, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
-
+from werkzeug.security import generate_password_hash, check_password_hash
+if os.path.exists("env.py"):
+    import env
 
 app = Flask(__name__)
 
@@ -18,6 +21,11 @@ def index():
     return render_template('index.html',
                            books=mongo.db.books.find(),
                            page_title='index')
+
+
+@app.route('/register', methods=["GET", "POST"])
+def register():
+    return render_template('register.html')
 
 
 @app.route('/get_book/<book_id>')
