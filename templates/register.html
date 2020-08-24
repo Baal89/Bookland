@@ -14,7 +14,8 @@
                                     <i class="fas fa-user-plus"></i>
                                 </div>
                                 <div class="col-11 px-0">
-                                    <input name="username" type="text" class="form-control" id="username" placeholder="username" required>
+                                    <input name="username" type="text" class="form-control" id="username" 
+                                    pattern="^[a-zA-Z0-9]{5,15}$" placeholder="username" required>
                                 </div>
                             </div>
                         </div>
@@ -24,7 +25,8 @@
                                 <i class="fas fa-user-lock"></i>
                             </div>
                             <div class="col-11 px-0">
-                                <input name="password" type="text" class="form-control" id="password" placeholder="password" required>
+                                <input name="password" type="password" class="form-control" id="password" 
+                                pattern="^[a-zA-Z0-9]{5,15}$" minlength="5" maxlength="15" placeholder="password" required>
                             </div>
                         </div>
                     </div>

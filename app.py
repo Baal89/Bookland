@@ -12,6 +12,7 @@ app = Flask(__name__)
 
 app.config['MONGO_DBNAME'] = 'Bookland'
 app.config['MONGO_URI'] = os.environ.get('MONGO_URI')
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 
 mongo = PyMongo(app)
 
@@ -25,6 +26,22 @@ def index():
 
 @app.route('/register', methods=["GET", "POST"])
 def register():
+    if request.method == "POST":
+        existing_user = mongo.db.users.find_one(
+            {'username': request.form.get('username').lower()})
+
+        if existing_user:
+            flash('Username already exists')
+            return redirect(url_for('register'))
+
+        register = {
+            "username": request.form.get("username").lower(),
+            "password": generate_password_hash(request.form.get("password")),
+            }
+        mongo.db.users.insert_one(register)
+        session["user"] = request.form.get("username").lower()
+        flash("Registration Succesfull!")
+        return redirect(url_for('index'))
     return render_template('register.html')
 
 
