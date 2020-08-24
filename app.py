@@ -1,6 +1,6 @@
 import os
 from flask import (
-    Flask, render_template, 
+    Flask, render_template,
     flash, session, redirect, request, url_for)
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
@@ -50,6 +50,26 @@ def get_book(book_id):
     reviews = mongo.db.reviews.find({'id': ObjectId(book_id)})
     a_book = mongo.db.books.find_one({'_id': ObjectId(book_id)})
     return render_template('getbook.html', book=a_book, reviews=reviews)
+
+
+@app.route('/login', methods=["GET", "POST"])
+def login():
+    if request.method == "POST":
+        existing_user = mongo.db.users.find_one(
+            {'username': request.form.get('username').lower()})
+
+        if existing_user:
+            if check_password_hash(existing_user['password'], request.form.get('password')):
+                session['user'] = request.form.get('username').lower()
+                flash("Welcome,{}".format(request.form.get('username')))
+            else:
+                flash('Incorrect Username and/or Password')
+                return redirect(url_for('login'))
+
+        else:
+            flash('Incorrect Username and/or Password')
+            return redirect(url_for('login'))
+    return render_template("login.html")
 
 
 @app.route('/add_book')

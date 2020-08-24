@@ -3,15 +3,15 @@
 
 <section>
     <div class="registration">
-        <h3 class="text-center">Register</h3>
+        <h3 class="text-center">Log In</h3>
 
         <div class="row">
-            <form class="col-12 col-md-8 offset-md-2" method="POST" action="{{ url_for('register') }}">
+            <form class="col-12 col-md-8 offset-md-2" method="POST" action="{{ url_for('login') }}">
                 <div class="card-panel">
                         <div class="form-group col-12">
                             <div class="row">
                                 <div class="col-1 px-0">
-                                    <i class="fas fa-user-plus"></i>
+                                    <i class="fas fa-user-cog"></i>
                                 </div>
                                 <div class="col-11 px-0">
                                     <input name="username" type="text" class="form-control" id="username" 
@@ -31,7 +31,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <button type="submit" class="col-12 btn btn-primary">REGISTER
+                        <button type="submit" class="col-12 btn btn-primary">Log In
                             <i id="button-icon" class="fas fa-sign-in-alt"></i>
                         </button>
                     </div>
@@ -40,8 +40,8 @@
         </div>
         <div class="row">
             <div class="col-12">
-                <p class="text-center">Already Registered?
-                    <a href="{{ url_for('login') }}" class="text-primary">Log In</a>
+                <p class="text-center">New Here?
+                    <a href="{{ url_for('register') }}" class="text-primary">Register Acccount</a>
                 </p>
             </div>
         </div>
