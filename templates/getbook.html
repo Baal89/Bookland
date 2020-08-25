@@ -47,6 +47,7 @@
 <a href="{{ url_for('add_review', book_id=book._id) }}" class="btn btn-primary">Leave a Review</a>
 
 {% for review in reviews %}
+    {{ review.user }}
     {{ review.book_title }}
     {{ review.review_title}}
     {{ review.review_rating }}

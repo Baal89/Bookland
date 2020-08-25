@@ -9,6 +9,12 @@
                     <h3 class="text-center text-primary">
                         {{ username }}'s Profile
                     </h3>
+                    {% for review in reviews %}
+                    <div>
+                        {{ review.book_title }}
+                        {{ review.user }}
+                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>

@@ -45,13 +45,6 @@ def register():
     return render_template('register.html')
 
 
-@app.route('/get_book/<book_id>')
-def get_book(book_id):
-    reviews = mongo.db.reviews.find({'id': ObjectId(book_id)})
-    a_book = mongo.db.books.find_one({'_id': ObjectId(book_id)})
-    return render_template('getbook.html', book=a_book, reviews=reviews)
-
-
 @app.route('/login', methods=["GET", "POST"])
 def login():
     if request.method == "POST":
@@ -77,9 +70,10 @@ def login():
 def profile(username):
     username = mongo.db.users.find_one(
         {'username': session['user']})['username']
+    reviews = mongo.db.reviews.find({'user': session['user']})
 
     if session['user']:
-        return render_template('profile.html', username=username)
+        return render_template('profile.html', username=username, reviews=reviews)
 
     return redirect(url_for('login'))
 
@@ -88,14 +82,19 @@ def profile(username):
 def logout():
     flash('You have been logged out')
     session.pop('user')
-    return redirect(url_for('login'))
+    return redirect(url_for('index'))
+
+
+@app.route('/get_book/<book_id>')
+def get_book(book_id):
+    reviews = mongo.db.reviews.find({'id': ObjectId(book_id)})
+    a_book = mongo.db.books.find_one({'_id': ObjectId(book_id)})
+    return render_template('getbook.html', book=a_book, reviews=reviews)
 
 
 @app.route('/add_book')
 def add_book():
-    return render_template(
-        'addbook.html',
-        categories=mongo.db.categories.find())
+    return render_template('addbook.html')
 
 
 @app.route('/insert_book', methods=['POST'])
@@ -108,8 +107,7 @@ def insert_book():
 @app.route('/edit_book/<book_id>')
 def edit_book(book_id):
     a_book = mongo.db.books.find_one({'_id': ObjectId(book_id)})
-    category = mongo.db.categories.find()
-    return render_template('editbook.html', book=a_book, categories=category)
+    return render_template('editbook.html', book=a_book)
 
 
 @app.route('/update_book/<book_id>', methods=['POST'])
@@ -138,12 +136,15 @@ def add_review(book_id):
     return render_template('addreview.html', book=a_book)
 
 
-@app.route('/insert_review/<book_id>', methods=['POST'])
-def insert_review(book_id):
-    original_id = ObjectId(book_id)
+@app.route('/insert_review/<book_id>/<username>', methods=['POST'])
+def insert_review(book_id, username):
+    book_id = ObjectId(book_id)
+    username = mongo.db.users.find_one(
+        {'username': session['user']})['username']
 
     submission = {
-        'id': original_id,
+        'id': book_id,
+        'user': username,
         'book_title': request.form.get('book_title'),
         'review_title': request.form.get('review_title'),
         'review_rating': request.form.get('review_rating'),
@@ -152,7 +153,7 @@ def insert_review(book_id):
 
     reviews = mongo.db.reviews
     reviews.insert_one(submission)
-    return redirect(url_for('get_book', book_id=book_id))
+    return redirect(url_for('get_book', book_id=book_id, username=username))
 
 
 if __name__ == '__main__':
