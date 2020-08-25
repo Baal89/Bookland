@@ -113,7 +113,8 @@ def edit_book(book_id):
 @app.route('/update_book/<book_id>', methods=['POST'])
 def update_book(book_id):
     books = mongo.db.books
-    books.update({'_id': ObjectId(book_id)}, {
+    books.update({
+        '_id': ObjectId(book_id),
         'book_title': request.form.get('book_title'),
         'category_name': request.form.get('category_name'),
         'book_author': request.form.get('book_author'),
@@ -154,6 +155,24 @@ def insert_review(book_id, username):
     reviews = mongo.db.reviews
     reviews.insert_one(submission)
     return redirect(url_for('get_book', book_id=book_id, username=username))
+
+
+@app.route('/forum')
+def forum():
+    threads = mongo.db.threads.find()
+    return render_template('forum.html', threads=threads)
+
+
+@app.route('/newthread')
+def newthread():
+    return render_template('newthread.html')
+
+
+@app.route('/insertthread',  methods=['POST'])
+def insertthread():
+    threads = mongo.db.threads
+    threads.insert_one(request.form.to_dict())
+    return redirect(url_for('forum'))
 
 
 if __name__ == '__main__':

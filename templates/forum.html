@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<section>
+    <a href="{{ url_for('newthread') }}">Create a Thread</a>
+
+    <div class="row">
+        {% for thread in threads %}
+            <div class="col-12">
+                {{ thread.thread_title }}
+                {{ thread.thread_content }}
+            </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}
