@@ -5,6 +5,7 @@ from flask import (
 from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.security import generate_password_hash, check_password_hash
+from datetime import datetime
 if os.path.exists("env.py"):
     import env
 
@@ -159,20 +160,45 @@ def insert_review(book_id, username):
 
 @app.route('/forum')
 def forum():
-    threads = mongo.db.threads.find()
-    return render_template('forum.html', threads=threads)
+    topics = mongo.db.topics.find()
+    return render_template('forum.html', topics=topics)
 
 
-@app.route('/newthread')
-def newthread():
-    return render_template('newthread.html')
+@app.route('/newtopic')
+def newtopic():
+    return render_template('newtopic.html')
 
 
-@app.route('/insertthread',  methods=['POST'])
-def insertthread():
-    threads = mongo.db.threads
-    threads.insert_one(request.form.to_dict())
+@app.route('/inserttopic',  methods=['POST'])
+def inserttopic():
+    topics = mongo.db.topics
+    topics.insert_one(request.form.to_dict())
     return redirect(url_for('forum'))
+
+
+@app.route('/gettopic/<topic_id>')
+def gettopic(topic_id):
+    replys = mongo.db.replys.find({'topic': ObjectId(topic_id)})
+    topic = mongo.db.topics.find_one({'_id': ObjectId(topic_id)})
+    return render_template('gettopic.html', topic=topic, replys=replys)
+
+
+@app.route('/replytopic/<topic_id>/<username>', methods=["POST"])
+def replytopic(topic_id, username):
+    topic_id = ObjectId(topic_id)
+    username = mongo.db.users.find_one(
+        {'username': session['user']})['username']
+
+    submission = {
+        'topic': topic_id,
+        'username': username,
+        'date': datetime.utcnow(),
+        'message': request.form.get('reply_message')
+    }
+
+    replys = mongo.db.replys
+    replys.insert_one(submission)
+    return redirect(url_for('gettopic', topic_id=topic_id, username=username))
 
 
 if __name__ == '__main__':

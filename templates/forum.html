@@ -2,14 +2,16 @@
 {% block content %}
 
 <section>
-    <a href="{{ url_for('newthread') }}">Create a Thread</a>
+    <a href="{{ url_for('newtopic') }}">Create a Topic</a>
 
     <div class="row">
-        {% for thread in threads %}
+        {% for topic in topics %}
+        <a href="{{ url_for('gettopic', topic_id=topic._id) }}">
             <div class="col-12">
-                {{ thread.thread_title }}
-                {{ thread.thread_content }}
+                {{ topic.topic_title }}
+                {{ topic.topic_content }}
             </div>
+        </a>
         {% endfor %}
     </div>
 </section>
