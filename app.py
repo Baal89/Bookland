@@ -3,7 +3,9 @@ from flask import (
     Flask, render_template,
     flash, session, redirect, request, url_for)
 from flask_pymongo import PyMongo
+import json
 from bson.objectid import ObjectId
+from bson import json_util
 from werkzeug.security import generate_password_hash, check_password_hash
 from datetime import datetime
 if os.path.exists("env.py"):
@@ -143,13 +145,14 @@ def insert_review(book_id, username):
     book_id = ObjectId(book_id)
     username = mongo.db.users.find_one(
         {'username': session['user']})['username']
+    rating = float(request.form.get('review_rating'))
 
     submission = {
         'id': book_id,
         'user': username,
         'book_title': request.form.get('book_title'),
         'review_title': request.form.get('review_title'),
-        'review_rating': request.form.get('review_rating'),
+        'review_rating': rating,
         'review_description': request.form.get('review_description')
     }
 
@@ -199,6 +202,23 @@ def replytopic(topic_id, username):
     replys = mongo.db.replys
     replys.insert_one(submission)
     return redirect(url_for('gettopic', topic_id=topic_id, username=username))
+
+
+@app.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
+
+@app.route('/data')
+def data():
+    FIELDS = {'_id': False, 'book_title': True, 'review_rating': True}
+
+    projects = mongo.db.reviews.find({}, FIELDS)
+    json_projects = []
+    for project in projects:
+        json_projects.append(project)
+    json_projects = json.dumps(json_projects, default=json_util.default)
+    return json_projects
 
 
 if __name__ == '__main__':
