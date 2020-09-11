@@ -1,18 +1,66 @@
 /*---------------------------------------------------base.html*/
 
+.navbar-light .navbar-nav .nav-link {
+    color: #e62830 !important;
+    padding-right: 50px;
+    font-size: 18px;
+    letter-spacing: 1px; 
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: white !important;
+    background-color: #e62830;
+}
+
+.search {
+    padding-right: 170px;
+}
+
+.search-form {
+    margin-left: 20px;
+    margin-right: 50px;
+}
+
+.navbar-light .navbar-brand {
+    font-size: 40px;
+}
+
+.auth {
+    color: black;
+    font-size: 18px;
+}
+
+.auth:hover {
+    color: #e62830;
+    text-decoration: none;
+}
+
+#user {
+    margin-right: 20px;
+    color: #e62830;
+}
+
+.search {
+    border: 2px solid #000000;
+}
+
+.search:focus {
+    box-shadow: none;
+    border: 2px solid #000000 !important;
+}
 /*-----------------------------------------------register.html*/
 
-.form-control {
+.authentication {
     border: none;
     border-radius: 0;
     border-bottom: 1px solid #ced4da;
 }
 
-.form-group {
+.authentication {
     padding: 30px 0;
 }
 
-.form-control:focus {
+.authentication:focus {
    box-shadow: none;
    border-color: #28a745 !important;
 }
@@ -32,7 +80,14 @@
    
 }
 
-form {
+.authentication-form {
     border-bottom: 1px solid #c9c3c3;
     padding-bottom: 50px;
+}
+
+/*--------------------------------------------------------footer*/
+
+footer {
+    background-color: black;
+    color: white
 }
