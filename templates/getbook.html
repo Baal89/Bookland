@@ -2,58 +2,69 @@
 {% block content %}
 
 <section>
-    <div class="row">
-        <div class="col-12">
-            {{ book.book_title }}
+    <div class="container">
+        <div class="row">
+            <div class="col-9 book-title">
+                {{ book.book_title }}
+            </div>
+            <div class="col-3">
+            {% if session.user %}
+                <a href="{{ url_for('edit_book', book_id=book._id) }}" class="button">Edit Book</a>
+            {% else %}
+                <a href="#" class="button" disabled>Edit Book</a>
+            {% endif %}
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-            <img src="{{ book.book_image }}">
-        </div>
-        <div class="col-md-8">
-            <div class="row">
-                <div class="col-12">
-                    <p>author: </p>
-                    {{ book.book_author }}
-                </div>
-               <hr>
-                <div class="col-12">
-                    <p>Category: </p>
-                    {{ book.category_name }}
-                </div>
-                <div class="col-12">
-                    <p>Saga: </p>
-                    {{ book.collection_name }}
-                </div>
-                <div class="col-12">
-                    <p>Rating: </p>
-                    {{ book.book_rating }}
+        <div class="row">
+            <div class="col-md-4">
+                <img src="{{ book.book_image }}" class="book-image">
+            </div>
+            <div class="col-md-7 offset-md-1">
+                <div class="row">
+                    <div class="col-12">
+                        <ul>
+                            <li class="details">author:</li>
+                                {{ book.book_author }}
+                        </ul>
+                    </div>
+                    <div class="col-12">
+                        <ul>
+                            <li class="details">Category: </li>
+                            {{ book.category_name }}
+                        </ul>
+                    </div>
+                    <div class="col-12">
+                        <ul>
+                            <li class="details">Saga: </li>
+                            {{ book.collection_name }}
+                        </ul>
+                    </div>
+                    <div class="col-12">
+                        <ul>
+                            <li class="details">Rating: </li>
+                            {{ book.book_rating }}
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            {{ book.book_description }}
+        <div class="row">
+            <div class="col-12">
+                {{ book.book_description }}
+            </div>
         </div>
+    <hr>
+
+    <a href="{{ url_for('add_review', book_id=book._id) }}" class="btn btn-primary">Leave a Review</a>
+
+    {% for review in reviews %}
+        {{ review.user }}
+        {{ review.book_title }}
+        {{ review.review_title}}
+        {{ review.review_rating }}
+        {{ review.review_description }}
+    {% endfor %}
     </div>
-
-<a href="{{ url_for('edit_book', book_id=book._id) }}" class="btn btn-success">Edit Book</a>
-<a href="{{ url_for('delete_book', book_id=book._id) }}" class="btn btn-danger">Remove Book</a>
-
-<hr>
-
-<a href="{{ url_for('add_review', book_id=book._id) }}" class="btn btn-primary">Leave a Review</a>
-
-{% for review in reviews %}
-    {{ review.user }}
-    {{ review.book_title }}
-    {{ review.review_title}}
-    {{ review.review_rating }}
-    {{ review.review_description }}
-{% endfor %}
-
 </section>
 
 {% endblock %}

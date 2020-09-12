@@ -128,12 +128,6 @@ def update_book(book_id):
     return redirect(url_for('index'))
 
 
-@app.route('/delete_book/<book_id>')
-def delete_book(book_id):
-    mongo.db.books.remove({'_id': ObjectId(book_id)})
-    return redirect(url_for('index'))
-
-
 @app.route('/add_review/<book_id>')
 def add_review(book_id):
     a_book = mongo.db.books.find_one({'_id': ObjectId(book_id)})

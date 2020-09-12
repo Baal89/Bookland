@@ -85,6 +85,59 @@
     padding-bottom: 50px;
 }
 
+/*--------------------------------------------------------index*/
+
+.get-book {
+    color: black;
+    text-decoration: none;
+}
+
+.get-book:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.card-img-top {
+    width: 90%;
+}
+
+.main-index-container {
+    margin: 50px auto;
+}
+
+/*--------------------------------------------------------getbook.html*/
+
+.book-image {
+    width: inherit;
+    margin-bottom: 30px;
+}
+
+.book-title {
+    font-size: 35px;
+    margin-bottom: 30px; 
+}
+
+.details {
+    margin-top: 1rem;
+    font-size: 20px;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.button {
+    border: 2px solid black;
+    padding: 10px 30px;
+    color: black;
+    font-weight: bold;
+}
+
+.button:hover{
+    color: #e62830;
+    text-decoration: none;
+}
+
 /*--------------------------------------------------------footer*/
 
 footer {
