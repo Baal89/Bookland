@@ -3,7 +3,7 @@
 
 <section>
     <div class="container">
-        <div class="row">
+        <div class="row d-flex align-items-center">
             <div class="col-9 book-title">
                 {{ book.book_title }}
             </div>
@@ -11,7 +11,8 @@
             {% if session.user %}
                 <a href="{{ url_for('edit_book', book_id=book._id) }}" class="button">Edit Book</a>
             {% else %}
-                <a href="#" class="button" disabled>Edit Book</a>
+                <button type="button" class="btn btn-secondary btn-lg" disabled>Edit Book</button>
+                <p class="text-muted under-text">You need to log in</p>
             {% endif %}
             </div>
         </div>
@@ -30,19 +31,19 @@
                     <div class="col-12">
                         <ul>
                             <li class="details">Category: </li>
-                            {{ book.category_name }}
+                                {{ book.category_name }}
                         </ul>
                     </div>
                     <div class="col-12">
                         <ul>
                             <li class="details">Saga: </li>
-                            {{ book.collection_name }}
+                                {{ book.collection_name }}
                         </ul>
                     </div>
                     <div class="col-12">
                         <ul>
                             <li class="details">Rating: </li>
-                            {{ book.book_rating }}
+                                {{ book.book_rating }}
                         </ul>
                     </div>
                 </div>
@@ -53,18 +54,51 @@
                 {{ book.book_description }}
             </div>
         </div>
-    <hr>
-
-    <a href="{{ url_for('add_review', book_id=book._id) }}" class="btn btn-primary">Leave a Review</a>
-
-    {% for review in reviews %}
-        {{ review.user }}
-        {{ review.book_title }}
-        {{ review.review_title}}
-        {{ review.review_rating }}
-        {{ review.review_description }}
-    {% endfor %}
     </div>
+
+    <div class="container" id="review-button-container">
+        <div class="row">
+            <div class="col-12">
+            {% if session.user %}
+                <a href="{{ url_for('add_review', book_id=book._id) }}" class="button">Leave a Review</a>
+            {% else %}
+                <button type="button" class="btn btn-secondary btn-lg" disabled>Leave a Review</button>
+                <p class="text-muted under-text">You need to log in</p>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row reviews-container">
+            {% for review in reviews %}
+                <div class="col-12 review">
+                    <div class="row">
+                        <div class="col-12">
+                            {{ review.user }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            {{ review.review_rating }} - {{ review.review_title}}
+                        </div>
+                    </div>  
+                    <div class="row">
+                        <div class="col-12">
+                            {{ review.date }}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            {{ review.review_description }}
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    
 </section>
 
 {% endblock %}

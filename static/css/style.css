@@ -1,3 +1,7 @@
+html, body {
+    min-height: 100vh;
+}
+
 /*---------------------------------------------------base.html*/
 
 .navbar-light .navbar-nav .nav-link {
@@ -41,34 +45,29 @@
 }
 
 .search {
-    border: 2px solid #000000;
+    border: 1px solid #000000;
 }
 
 .search:focus {
     box-shadow: none;
     border: 2px solid #000000 !important;
 }
-/*-----------------------------------------------register.html*/
-
-.authentication {
-    border: none;
-    border-radius: 0;
-    border-bottom: 1px solid #ced4da;
-}
+/*--------------------------------------login/register.html*/
 
 .authentication {
     padding: 30px 0;
-}
-
-.authentication:focus {
-   box-shadow: none;
-   border-color: #28a745 !important;
+    border: #cccccc;
 }
 
 .fas {
     font-size: 30px;
-    color: #007bff;
+    color: #cccccc;
 }
+
+.authentication:focus {
+    box-shadow: none;
+    border: 2px solid #000000;
+} 
 
 #button-icon {
     color: white !important;
@@ -85,6 +84,10 @@
     padding-bottom: 50px;
 }
 
+.labelfocus {
+    color: #e62830;
+    transition: all 0.5s;
+}
 /*--------------------------------------------------------index*/
 
 .get-book {
@@ -126,16 +129,48 @@ ul {
   list-style-type: none;
 }
 
-.button {
-    border: 2px solid black;
+.btn {
+    font-size: 15px;
+}
+
+.button,
+.btn {
     padding: 10px 30px;
-    color: black;
+    background-color: #e62830;
     font-weight: bold;
+    color: white;
+    border-radius: 3px;
 }
 
 .button:hover{
-    color: #e62830;
+    color: white;
     text-decoration: none;
+    border: 2px solid black;
+}
+
+.under-text {
+    margin-top: 5px;
+}
+
+#review-button-container {
+    margin-top: 30px;
+}
+
+.reviews-container {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.review {
+    margin-bottom: 30px;
+}
+
+.registration {
+    margin-top: 120px;
+    margin-bottom: 150px;
+    height: 66vh;
+    overflow: hidden;
+    width: 75%;
 }
 
 /*--------------------------------------------------------footer*/
@@ -144,3 +179,4 @@ footer {
     background-color: black;
     color: white
 }
+

@@ -147,7 +147,8 @@ def insert_review(book_id, username):
         'book_title': request.form.get('book_title'),
         'review_title': request.form.get('review_title'),
         'review_rating': rating,
-        'review_description': request.form.get('review_description')
+        'review_description': request.form.get('review_description'),
+        'date': datetime.utcnow(),
     }
 
     reviews = mongo.db.reviews
