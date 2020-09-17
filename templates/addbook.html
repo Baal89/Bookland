@@ -2,24 +2,21 @@
 {% block content %}
 
 <section>
-    <div class="container"> 
-        <form action="{{ url_for('insert_book') }}" method="POST">
+    <div class="container registration">
+        <h1 class="add-header">Add a new book</h1>
+        <form action="{{ url_for('insert_book') }}" method="POST" class="addbook">
             <div class="form-row">
                 <div class="form-group col-12">
                     <label for="title">Book Title</label>
-                    <input type="text" class="form-control" id="title" name="book_title">
+                    <input type="text" class="form-control" id="title" name="book_title" required>
                 </div>
                 <div class="form-group col-12">
                     <label for="category">Category</label>
-                    <input type="text" class="form-control" id="category" name="category_name">
+                    <input type="text" class="form-control" id="category" name="category_name" required>
                 </div>
                 <div class="form-group col-6">
                     <label for="author">Book Author</label>
-                    <input type="text" class="form-control" id="author" name="book_author">
-                </div>
-                <div class="form-group col-6">
-                    <label for="image">Book Image</label>
-                    <input type="text" class="form-control" id="image" name="book_image" placeholder="Add image URL">
+                    <input type="text" class="form-control" id="author" name="book_author" required>
                 </div>
                 <div class="form-group col-6">
                     <label for="saga">Saga</label>
@@ -27,13 +24,17 @@
                     placeholder="If not part of a saga please write N/A">
                 </div>
                 <div class="form-group col-12">
+                    <label for="image">Book Image</label>
+                    <input type="text" class="form-control" id="image" name="book_image" placeholder="Add image URL" required>
+                </div>
+                <div class="form-group col-12">
                     <label for="description">Book Desctiption </label>
-                    <textarea class="form-control" id="description" name="book_description" rows="5"></textarea>
+                    <textarea class="form-control" id="description" name="book_description" rows="5" required></textarea>
                 </div>
             </div>
             <div class="form-row">
                 <div class="col-12">
-                    <button class="btn btn-primary">Submit</button>
+                    <button class="btn button">Submit</button>
                 </div>
             </div>
         </form>

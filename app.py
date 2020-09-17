@@ -39,8 +39,10 @@ def register():
 
         register = {
             "username": request.form.get("username").lower(),
+            "email": request.form.get("email"),
             "password": generate_password_hash(request.form.get("password")),
             }
+
         mongo.db.users.insert_one(register)
         session["user"] = request.form.get("username").lower()
         flash("Registration Succesfull!")
@@ -69,8 +71,8 @@ def login():
     return render_template("login.html")
 
 
-@app.route('/profile/<username>', methods=['POST', 'GET'])
-def profile(username):
+@app.route('/profile', methods=['POST', 'GET'])
+def profile():
     username = mongo.db.users.find_one(
         {'username': session['user']})['username']
     reviews = mongo.db.reviews.find({'user': session['user']})
@@ -116,8 +118,9 @@ def edit_book(book_id):
 @app.route('/update_book/<book_id>', methods=['POST'])
 def update_book(book_id):
     books = mongo.db.books
-    books.update({
-        '_id': ObjectId(book_id),
+    books.update({'_id': ObjectId(book_id)},
+
+    {
         'book_title': request.form.get('book_title'),
         'category_name': request.form.get('category_name'),
         'book_author': request.form.get('book_author'),
@@ -125,6 +128,8 @@ def update_book(book_id):
         'collection_name': request.form.get('collection_name'),
         'book_description': request.form.get('book_description')
     })
+
+    flash("The book has been updated")
     return redirect(url_for('index'))
 
 
@@ -134,8 +139,8 @@ def add_review(book_id):
     return render_template('addreview.html', book=a_book)
 
 
-@app.route('/insert_review/<book_id>/<username>', methods=['POST'])
-def insert_review(book_id, username):
+@app.route('/insert_review/<book_id>', methods=['POST'])
+def insert_review(book_id):
     book_id = ObjectId(book_id)
     username = mongo.db.users.find_one(
         {'username': session['user']})['username']
@@ -169,8 +174,17 @@ def newtopic():
 
 @app.route('/inserttopic',  methods=['POST'])
 def inserttopic():
+    username = mongo.db.users.find_one(
+        {'username': session['user']})['username']
+
+    submission = {
+        'user': username,
+        'topic_title': request.form.get('topic_title'),
+        'date': datetime.utcnow(),
+    }
+
     topics = mongo.db.topics
-    topics.insert_one(request.form.to_dict())
+    topics.insert_one(submission)
     return redirect(url_for('forum'))
 
 
@@ -181,8 +195,8 @@ def gettopic(topic_id):
     return render_template('gettopic.html', topic=topic, replys=replys)
 
 
-@app.route('/replytopic/<topic_id>/<username>', methods=["POST"])
-def replytopic(topic_id, username):
+@app.route('/replytopic/<topic_id>', methods=["POST"])
+def replytopic(topic_id):
     topic_id = ObjectId(topic_id)
     username = mongo.db.users.find_one(
         {'username': session['user']})['username']

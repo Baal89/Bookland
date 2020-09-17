@@ -1,8 +1,8 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<section>
-    <div class="container">
+<section class="">
+    <div class="container registration" id="getbook">
         <div class="row d-flex align-items-center">
             <div class="col-9 book-title">
                 {{ book.book_title }}
@@ -11,8 +11,8 @@
             {% if session.user %}
                 <a href="{{ url_for('edit_book', book_id=book._id) }}" class="button">Edit Book</a>
             {% else %}
-                <button type="button" class="btn btn-secondary btn-lg" disabled>Edit Book</button>
-                <p class="text-muted under-text">You need to log in</p>
+                <button class="btn btn-secondary btn-lg" disabled>Edit Book</button>
+                <small class="form-text text-muted">Log in First</small>
             {% endif %}
             </div>
         </div>
@@ -62,8 +62,8 @@
             {% if session.user %}
                 <a href="{{ url_for('add_review', book_id=book._id) }}" class="button">Leave a Review</a>
             {% else %}
-                <button type="button" class="btn btn-secondary btn-lg" disabled>Leave a Review</button>
-                <p class="text-muted under-text">You need to log in</p>
+                <button class="btn btn-secondary btn-lg" disabled>Leave a Review</button>
+                <small class="form-text text-muted">Log in first</small>
             {% endif %}
             </div>
         </div>

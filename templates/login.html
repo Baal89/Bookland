@@ -14,7 +14,7 @@
                                 <i class="fas fa-user-cog"></i>
                             </div>
                             <div class="col-11 px-0">
-                                <input name="username" type="text" class="form-control authentication" id="username" 
+                                <input name="username" type="text" class="form-control" id="username" 
                                 pattern="^[a-zA-Z0-9]{5,15}$" placeholder="username" required>
                             </div>
                         </div>
@@ -25,13 +25,13 @@
                                 <i class="fas fa-user-lock"></i>
                             </div>
                             <div class="col-11 px-0">
-                                <input name="password" type="password" class="form-control authentication" id="password" 
+                                <input name="password" type="password" class="form-control" id="password" 
                                 pattern="^[a-zA-Z0-9]{5,15}$" minlength="5" maxlength="15" placeholder="password" required>
                             </div>
                         </div>
                     </div>
                     <div class="row">
-                        <button class="col-12 button">Log In
+                        <button class="btn col-12 button">Log In
                             <i id="button-icon" class="fas fa-sign-in-alt"></i>
                         </button>
                     </div>
@@ -41,7 +41,7 @@
         <div class="row">
             <div class="col-12">
                 <p class="text-center">New Here?
-                    <a href="{{ url_for('register') }}" class="text-primary">Register Acccount</a>
+                    <a href="{{ url_for('register') }}" class="text-primary">Register Account</a>
                 </p>
             </div>
         </div>

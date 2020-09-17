@@ -1,7 +1,35 @@
 html, body {
+    margin: 0;
+    padding: 0;
+}
+
+section{
     min-height: 100vh;
 }
 
+ .form-control {
+    border: 1px solid black;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border: 2px solid black;;
+}
+
+.button
+    {
+    padding: 10px 30px;
+    background-color: #e62830;
+    font-weight: bold;
+    color: white !important;
+    border-radius: 3px;
+}
+
+.button:hover{
+    color: white;
+    text-decoration: none;
+    border: 2px solid black;
+}
 /*---------------------------------------------------base.html*/
 
 .navbar-light .navbar-nav .nav-link {
@@ -54,7 +82,9 @@ html, body {
 }
 /*--------------------------------------login/register.html*/
 
-.authentication {
+
+
+.authentication .form-control {
     padding: 30px 0;
     border: #cccccc;
 }
@@ -64,7 +94,7 @@ html, body {
     color: #cccccc;
 }
 
-.authentication:focus {
+.authentication input:focus {
     box-shadow: none;
     border: 2px solid #000000;
 } 
@@ -129,25 +159,6 @@ ul {
   list-style-type: none;
 }
 
-.btn {
-    font-size: 15px;
-}
-
-.button,
-.btn {
-    padding: 10px 30px;
-    background-color: #e62830;
-    font-weight: bold;
-    color: white;
-    border-radius: 3px;
-}
-
-.button:hover{
-    color: white;
-    text-decoration: none;
-    border: 2px solid black;
-}
-
 .under-text {
     margin-top: 5px;
 }
@@ -167,16 +178,40 @@ ul {
 
 .registration {
     margin-top: 120px;
-    margin-bottom: 150px;
-    height: 66vh;
-    overflow: hidden;
     width: 75%;
+}
+/*--------------------------------------------------addbook.html*/
+
+.add-header {
+    margin-bottom: 40px;
+}
+
+/*----------------------------------------------------forum.html*/
+
+.topics {
+    margin-top: 20px;
+}
+
+.topics a {
+    text-decoration: none;
+}
+
+.topics h4 {
+    font-weight: 400;
+    font-size: 18px;
+}
+
+.topic-container {
+    margin-top: 60px;
 }
 
 /*--------------------------------------------------------footer*/
 
 footer {
     background-color: black;
-    color: white
 }
 
+.footer p {
+    padding: 15px 0;
+    color: white;
+}
