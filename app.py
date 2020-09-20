@@ -106,6 +106,7 @@ def add_book():
 def insert_book():
     books = mongo.db.books
     books.insert_one(request.form.to_dict())
+    flash('The book has been added!')
     return redirect(url_for('index'))
 
 
@@ -159,58 +160,6 @@ def insert_review(book_id):
     reviews = mongo.db.reviews
     reviews.insert_one(submission)
     return redirect(url_for('get_book', book_id=book_id, username=username))
-
-
-@app.route('/forum')
-def forum():
-    topics = mongo.db.topics.find()
-    return render_template('forum.html', topics=topics)
-
-
-@app.route('/newtopic')
-def newtopic():
-    return render_template('newtopic.html')
-
-
-@app.route('/inserttopic',  methods=['POST'])
-def inserttopic():
-    username = mongo.db.users.find_one(
-        {'username': session['user']})['username']
-
-    submission = {
-        'user': username,
-        'topic_title': request.form.get('topic_title'),
-        'date': datetime.utcnow(),
-    }
-
-    topics = mongo.db.topics
-    topics.insert_one(submission)
-    return redirect(url_for('forum'))
-
-
-@app.route('/gettopic/<topic_id>')
-def gettopic(topic_id):
-    replys = mongo.db.replys.find({'topic': ObjectId(topic_id)})
-    topic = mongo.db.topics.find_one({'_id': ObjectId(topic_id)})
-    return render_template('gettopic.html', topic=topic, replys=replys)
-
-
-@app.route('/replytopic/<topic_id>', methods=["POST"])
-def replytopic(topic_id):
-    topic_id = ObjectId(topic_id)
-    username = mongo.db.users.find_one(
-        {'username': session['user']})['username']
-
-    submission = {
-        'topic': topic_id,
-        'username': username,
-        'date': datetime.utcnow(),
-        'message': request.form.get('reply_message')
-    }
-
-    replys = mongo.db.replys
-    replys.insert_one(submission)
-    return redirect(url_for('gettopic', topic_id=topic_id, username=username))
 
 
 @app.route('/dashboard')
