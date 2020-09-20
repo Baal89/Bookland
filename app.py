@@ -159,6 +159,7 @@ def insert_review(book_id):
 
     reviews = mongo.db.reviews
     reviews.insert_one(submission)
+    flash('Your review has been added!')
     return redirect(url_for('get_book', book_id=book_id, username=username))
 
 

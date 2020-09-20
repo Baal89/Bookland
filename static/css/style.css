@@ -215,3 +215,13 @@ footer {
     padding: 15px 0;
     color: white;
 }
+
+/*----------------------------------------------------dashboard.html*/
+
+.bar {
+    fill: #e62830 !important;
+}
+
+.graph-header {
+    font-size: 20px;
+}
